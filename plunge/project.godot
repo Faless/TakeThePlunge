@@ -8,8 +8,22 @@
 
 config_version=5
 
+_global_script_classes=[{
+"base": "MultiplayerPeerExtension",
+"class": &"EchoServer",
+"language": &"GDScript",
+"path": "res://network/echo_server.gd"
+}]
+_global_script_class_icons={
+"EchoServer": ""
+}
+
 [application]
 
 config/name="Take the Plunge"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Network="*res://network/network.gd"
