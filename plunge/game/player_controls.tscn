@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://4mv62npnsved"]
+
+[ext_resource type="Script" path="res://game/player_controls.gd" id="1_vhj7r"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_su2i1"]
+properties/0/path = NodePath(".:input_dir")
+properties/0/spawn = true
+properties/0/sync = true
+
+[node name="PlayerControls" type="Node"]
+script = ExtResource("1_vhj7r")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_su2i1")

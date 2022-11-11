@@ -1,10 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://dys7q37r6f5eb"]
+[gd_scene load_steps=6 format=3 uid="uid://dys7q37r6f5eb"]
 
 [ext_resource type="Script" path="res://game/character.gd" id="1_per42"]
+[ext_resource type="PackedScene" uid="uid://4mv62npnsved" path="res://game/player_controls.tscn" id="2_xhprt"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4ing6"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_w1wc2"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ootac"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:velocity")
+properties/1/spawn = true
+properties/1/sync = true
 
 [node name="Character" type="CharacterBody3D"]
 script = ExtResource("1_per42")
@@ -14,3 +23,8 @@ shape = SubResource("CapsuleShape3D_4ing6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_w1wc2")
+
+[node name="PlayerControls" parent="." instance=ExtResource("2_xhprt")]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ootac")

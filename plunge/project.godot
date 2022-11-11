@@ -13,14 +13,21 @@ _global_script_classes=[{
 "class": &"EchoServer",
 "language": &"GDScript",
 "path": "res://network/echo_server.gd"
+}, {
+"base": "Node",
+"class": &"PlayerControls",
+"language": &"GDScript",
+"path": "res://game/player_controls.gd"
 }]
 _global_script_class_icons={
-"EchoServer": ""
+"EchoServer": "",
+"PlayerControls": ""
 }
 
 [application]
 
 config/name="Take the Plunge"
+run/main_scene="res://main_menu.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -15,3 +15,9 @@ func _poll():
 
 func _get_available_packet_count():
 	return 0
+
+func _set_transfer_mode(p_mode):
+	pass
+
+func _set_transfer_channel(p_channel):
+	pass
