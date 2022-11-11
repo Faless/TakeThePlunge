@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://d87mh43ny5e7"]
+
+[ext_resource type="PackedScene" uid="uid://dys7q37r6f5eb" path="res://game/character.tscn" id="1_dnqap"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4ruq1"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_t3k5p"]
+size = Vector2(200, 200)
+
+[node name="Map" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_4ruq1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_t3k5p")
+
+[node name="Character" parent="." instance=ExtResource("1_dnqap")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.919053, 0.394134, 0, -0.394134, 0.919053, 0, 2.80501, 3.99031)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.5508, 0)
+omni_range = 200.0
