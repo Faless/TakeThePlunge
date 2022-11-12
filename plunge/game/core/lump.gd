@@ -1,4 +1,5 @@
 extends RigidBody3D
+class_name CoreLump
 
 var lifetime := 5.0
 

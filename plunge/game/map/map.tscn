@@ -41,7 +41,7 @@ script = ExtResource("3_xldes")
 [node name="Objects" type="Node3D" parent="."]
 
 [node name="ObjectSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://game/core/lump.tscn")
+_spawnable_scenes = PackedStringArray("res://game/core/lump.tscn", "res://game/ship/cannonball.tscn")
 spawn_path = NodePath("../Objects")
 
 [connection signal="plunged" from="Plungers/PlungeOMatic" to="." method="spawn_lump"]

@@ -1,6 +1,6 @@
 extends Node3D
 
-const Lump = preload("res://game/core/lump.tscn")
+const CannonBall = preload("res://game/ship/cannonball.tscn")
 
 func _ready():
 	if multiplayer.is_server():
@@ -21,7 +21,7 @@ func despawn_player(id: int):
 
 
 func spawn_lump(lump_transform: Transform3D, lump_linear_velocity: Vector3):
-	var lump = Lump.instantiate()
+	var lump = CannonBall.instantiate()
 	lump.global_transform = lump_transform
 	lump.linear_velocity = lump_linear_velocity
 	$Objects.add_child(lump, true)
