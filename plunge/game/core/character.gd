@@ -1,9 +1,6 @@
 extends CharacterBody3D
 class_name CoreCharacter
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
-
 @onready var controls := $PlayerControls as PlayerControls
 @onready var camera := $Camera3D as Camera3D
 

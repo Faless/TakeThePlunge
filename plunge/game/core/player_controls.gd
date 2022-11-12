@@ -28,7 +28,7 @@ var player := 1 :
 @export var trigger_count := 3
 @export var axis_count := 2
 
-var axies := PackedFloat32Array()
+var axises := PackedFloat32Array()
 var triggers := PackedByteArray()
 
 func _init():
@@ -39,8 +39,8 @@ func _init():
 
 	for i in range(axis_count):
 		_axises.push_back(Axis.new("axis_%d-" % i, "axis_%d+" % i))
-	axies.resize(axis_count)
-	axies.fill(0.0)
+	axises.resize(axis_count)
+	axises.fill(0.0)
 
 
 func _ready():
@@ -52,7 +52,7 @@ func update_controls():
 		return
 
 	for i in range(axis_count):
-		axies[i] = _axises[i].update()
+		axises[i] = _axises[i].update()
 
 	for i in range(trigger_count):
 		trigger.rpc(i, 1 if Input.is_action_just_pressed(_triggers[i]) else 0)

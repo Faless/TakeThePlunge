@@ -10,7 +10,8 @@ func _ready():
 
 
 func spawn_player(id: int):
-	$PlayerSpawner.spawn(id)
+	var ship = $PlayerSpawner.spawn(id)
+	ship.plunged.connect(spawn_lump)
 
 
 func despawn_player(id: int):

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://game/core/player_controls.gd" id="1_of240"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_su2i1"]
-properties/0/path = NodePath(".:axies")
+properties/0/path = NodePath(".:axises")
 properties/0/spawn = true
 properties/0/sync = true
 
