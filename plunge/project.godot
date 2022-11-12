@@ -18,10 +18,16 @@ _global_script_classes=[{
 "class": &"PlayerControls",
 "language": &"GDScript",
 "path": "res://game/player_controls.gd"
+}, {
+"base": "Node3D",
+"class": &"Plunger",
+"language": &"GDScript",
+"path": "res://game/plunger.gd"
 }]
 _global_script_class_icons={
 "EchoServer": "",
-"PlayerControls": ""
+"PlayerControls": "",
+"Plunger": ""
 }
 
 [application]
@@ -34,6 +40,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 Network="*res://network/network.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/plunge_plugin/plugin.cfg")
 
 [input]
 

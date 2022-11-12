@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://d87mh43ny5e7"]
+[gd_scene load_steps=6 format=3 uid="uid://d87mh43ny5e7"]
 
 [ext_resource type="Script" path="res://game/map.gd" id="1_ca6dq"]
+[ext_resource type="PackedScene" uid="uid://bg4h31vdewqt2" path="res://game/plunge_o_matic.tscn" id="2_bgsp4"]
 [ext_resource type="Script" path="res://game/player_spawner.gd" id="2_vpudi"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4ruq1"]
@@ -11,23 +12,36 @@ size = Vector2(200, 200)
 [node name="Map" type="Node3D"]
 script = ExtResource("1_ca6dq")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_4ruq1")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-mesh = SubResource("PlaneMesh_t3k5p")
-
-[node name="Players" type="Node3D" parent="."]
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.919053, 0.394134, 0, -0.394134, 0.919053, 0, 2.80501, 3.99031)
-
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.5508, 0)
 omni_range = 200.0
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("WorldBoundaryShape3D_4ruq1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_t3k5p")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.919053, 0.394134, 0, -0.394134, 0.919053, 0, 2.80501, 3.99031)
+
+[node name="Plungers" type="Node3D" parent="."]
+
+[node name="PlungeOMatic" parent="Plungers" instance=ExtResource("2_bgsp4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.6665)
+
+[node name="Players" type="Node3D" parent="."]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../Players")
 script = ExtResource("2_vpudi")
+
+[node name="Objects" type="Node3D" parent="."]
+
+[node name="ObjectSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://game/lump.tscn")
+spawn_path = NodePath("../Objects")
+
+[connection signal="plunged" from="Plungers/PlungeOMatic" to="." method="spawn_lump"]
