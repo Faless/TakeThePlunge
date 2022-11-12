@@ -16,6 +16,8 @@ var player := 1 :
 
 func _ready():
 	ctrls.player = player
+	if player == multiplayer.get_unique_id():
+		$Camera3D.make_current()
 
 func apply_controls():
 	# Handle Jump.
