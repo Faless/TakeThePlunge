@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://d87mh43ny5e7"]
 
-[ext_resource type="Script" path="res://game/map.gd" id="1_ca6dq"]
-[ext_resource type="PackedScene" uid="uid://bg4h31vdewqt2" path="res://game/plunge_o_matic.tscn" id="2_bgsp4"]
-[ext_resource type="Script" path="res://game/player_spawner.gd" id="2_vpudi"]
+[ext_resource type="Script" path="res://game/map/map.gd" id="1_e1uvj"]
+[ext_resource type="PackedScene" uid="uid://bg4h31vdewqt2" path="res://game/map/plunge_o_matic.tscn" id="2_bgsp4"]
+[ext_resource type="Script" path="res://game/map/player_spawner.gd" id="3_xldes"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4ruq1"]
 
@@ -10,7 +10,7 @@
 size = Vector2(200, 200)
 
 [node name="Map" type="Node3D"]
-script = ExtResource("1_ca6dq")
+script = ExtResource("1_e1uvj")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.5508, 0)
@@ -36,12 +36,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.6665)
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../Players")
-script = ExtResource("2_vpudi")
+script = ExtResource("3_xldes")
 
 [node name="Objects" type="Node3D" parent="."]
 
 [node name="ObjectSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://game/lump.tscn")
+_spawnable_scenes = PackedStringArray("res://game/core/lump.tscn")
 spawn_path = NodePath("../Objects")
 
 [connection signal="plunged" from="Plungers/PlungeOMatic" to="." method="spawn_lump"]

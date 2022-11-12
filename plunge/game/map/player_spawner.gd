@@ -1,6 +1,6 @@
 extends MultiplayerSpawner
 
-const Character = preload("res://game/character.tscn")
+const Character = preload("res://game/core/character.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _spawn_custom(data) -> Node:

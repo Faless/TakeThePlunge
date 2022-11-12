@@ -1,6 +1,6 @@
 extends Node3D
 
-const Lump = preload("res://game/lump.tscn")
+const Lump = preload("res://game/core/lump.tscn")
 
 func _ready():
 	if multiplayer.is_server():
