@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddu377oxkwxgc"]
+
+[ext_resource type="PackedScene" uid="uid://dys7q37r6f5eb" path="res://game/core/character.tscn" id="1_uimug"]
+[ext_resource type="Script" path="res://game/ship/ship.gd" id="2_cwx0o"]
+
+[node name="Ship" instance=ExtResource("1_uimug")]
+script = ExtResource("2_cwx0o")

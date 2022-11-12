@@ -1,43 +1,28 @@
 extends CharacterBody3D
-
+class_name CoreCharacter
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-
-@onready var ctrls := $PlayerControls as PlayerControls
+@onready var controls := $PlayerControls as PlayerControls
+@onready var camera := $Camera3D as Camera3D
 
 var player := 1 :
 	set(value):
 		player = value
 		$PlayerControls.player = value
 
+
 func _ready():
-	ctrls.player = player
+	controls.player = player
 	if player == multiplayer.get_unique_id():
-		$Camera3D.make_current()
-
-func apply_controls():
-	# Handle Jump.
-	if ctrls.jumping and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	var direction = (transform.basis * Vector3(ctrls.input_dir.x, 0, ctrls.input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		camera.make_current()
 
 
 func _physics_process(delta):
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y -= gravity * delta
+	controls.update_controls()
+	apply_controls(delta, not multiplayer.is_server())
 
-	if multiplayer.is_server():
-		apply_controls()
-		move_and_slide()
+
+func apply_controls(delta: float, is_dummy: bool):
+	pass
