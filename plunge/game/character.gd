@@ -12,12 +12,10 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var player := 1 :
 	set(value):
 		player = value
-		if ctrls:
-			ctrls.player = value
+		$PlayerControls.player = value
 
 func _ready():
-	if str(name).is_valid_int():
-		self.player = str(name).to_int()
+	ctrls.player = player
 
 func apply_controls():
 	# Handle Jump.

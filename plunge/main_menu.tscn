@@ -14,4 +14,19 @@ offset_right = 8.0
 offset_bottom = 8.0
 text = "Echo"
 
+[node name="Server" type="Button" parent="."]
+offset_left = 79.0
+offset_top = 1.0
+offset_right = 137.0
+offset_bottom = 32.0
+text = "Server"
+
+[node name="Client" type="Button" parent="."]
+offset_left = 163.0
+offset_right = 216.0
+offset_bottom = 31.0
+text = "Client"
+
 [connection signal="pressed" from="Echo" to="." method="_on_echo_pressed"]
+[connection signal="pressed" from="Server" to="." method="_on_server_pressed"]
+[connection signal="pressed" from="Client" to="." method="_on_client_pressed"]
