@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://bgqwsj2h7m0nm" path="res://assets/Ships/Texture/Palette.png" id="4_imfrj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l23nd"]
-radius = 1.5
-height = 8.0
+radius = 0.8
+height = 7.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4sgdo"]
 albedo_texture = ExtResource("4_imfrj")
