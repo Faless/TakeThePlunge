@@ -2,7 +2,7 @@ extends StaticBody3D
 
 signal plunged(lump_transform: Transform3D, lump_linear_velocity: Vector3)
 
-@export var rotation_speed := 1.0
+@export var rotation_speed := .01
 @export var plunge_fuzzy := 1.0
 
 # Called when the node enters the scene tree for the first time.

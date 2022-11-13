@@ -45,9 +45,11 @@ func apply_controls(delta: float, is_dummy: bool):
 
 
 func _on_player_controls_triggered(index):
-	if index == PLUNG_DIRECTION.LEFT or index == PLUNG_DIRECTION.ALL:
-		$Plungers/LB.plunge()
-		$Plungers/LF.plunge()
-	if index == PLUNG_DIRECTION.RIGHT or index == PLUNG_DIRECTION.ALL:
-		$Plungers/RB.plunge()
-		$Plungers/RF.plunge()
+	var group = &"cannon"
+	if index == PLUNG_DIRECTION.LEFT:
+		group = &"left"
+	elif index == PLUNG_DIRECTION.RIGHT:
+		group = &"right"
+	for p in $Plungers.get_children():
+		if p.is_in_group(group):
+			p.plunge()

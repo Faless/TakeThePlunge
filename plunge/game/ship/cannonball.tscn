@@ -3,12 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://cr5axunbg52f0" path="res://game/core/lump.tscn" id="1_3bygb"]
 [ext_resource type="Script" path="res://game/ship/cannonball.gd" id="2_il6yr"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kq6oo"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7pr5q"]
 albedo_color = Color(0.109804, 0.109804, 0.109804, 1)
 metallic = 0.75
 
-[sub_resource type="SphereMesh" id="SphereMesh_ld078"]
-material = SubResource("StandardMaterial3D_kq6oo")
+[sub_resource type="SphereMesh" id="SphereMesh_e8x0j"]
+material = SubResource("StandardMaterial3D_7pr5q")
 radius = 0.1
 height = 0.2
 
@@ -18,10 +18,8 @@ radius = 0.1
 [node name="Cannonball" instance=ExtResource("1_3bygb")]
 script = ExtResource("2_il6yr")
 
-[node name="MeshInstance3D" parent="." index="0"]
-mesh = SubResource("SphereMesh_ld078")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
+mesh = SubResource("SphereMesh_e8x0j")
 
-[node name="CollisionShape3D" parent="." index="1"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="3"]
 shape = SubResource("SphereShape3D_pnpbj")
-
-[node name="Area3D" type="Area3D" parent="." index="4"]

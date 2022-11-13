@@ -1,34 +1,53 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddu377oxkwxgc"]
+[gd_scene load_steps=8 format=3 uid="uid://ddu377oxkwxgc"]
 
 [ext_resource type="PackedScene" uid="uid://dys7q37r6f5eb" path="res://game/core/character.tscn" id="1_uimug"]
 [ext_resource type="Script" path="res://game/ship/ship.gd" id="2_cwx0o"]
+[ext_resource type="PackedScene" uid="uid://cu1rqfkbn8jvp" path="res://assets/Ships/Blends/ShipBig2.blend" id="3_dcg5j"]
 [ext_resource type="PackedScene" uid="uid://cteibw8oq25jt" path="res://game/core/plunger.tscn" id="3_vci30"]
+[ext_resource type="Texture2D" uid="uid://bgqwsj2h7m0nm" path="res://assets/Ships/Texture/Palette.png" id="4_imfrj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l23nd"]
+radius = 1.5
+height = 8.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4sgdo"]
+albedo_texture = ExtResource("4_imfrj")
 
 [node name="Ship" instance=ExtResource("1_uimug")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 script = ExtResource("2_cwx0o")
 
-[node name="CollisionShape3D" parent="." index="0"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+[node name="Camera3D" parent="." index="2"]
+transform = Transform3D(-1, -3.69465e-08, 7.92319e-08, 0, 0.906308, 0.422618, -8.74228e-08, 0.422618, -0.906308, 0, 5, -7)
 
-[node name="MeshInstance3D" parent="." index="1"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_l23nd")
+
+[node name="ShipBig2" parent="." index="4" instance=ExtResource("3_dcg5j")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1, 0)
+
+[node name="ShipBig2" parent="ShipBig2" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_4sgdo")
 
 [node name="Plungers" type="Node3D" parent="." index="5"]
 
-[node name="LF" parent="Plungers" index="0" instance=ExtResource("3_vci30")]
-transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -0.25, 0.5, 0.25)
-plunge_velocity = Vector3(0, 5, 0)
+[node name="FrontRight" parent="Plungers" index="0" groups=["cannon", "front", "right"] instance=ExtResource("3_vci30")]
+transform = Transform3D(0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0, 1, -0.25, -0.0501294, 0.25)
+plunge_velocity = Vector3(0, 15, 0)
 
-[node name="RF" parent="Plungers" index="1" instance=ExtResource("3_vci30")]
-transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0.25, 0.5, 0.25)
-plunge_velocity = Vector3(0, 5, 0)
+[node name="FrontLeft" parent="Plungers" index="1" groups=["cannon", "front", "left"] instance=ExtResource("3_vci30")]
+transform = Transform3D(0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0, 0, 1, 0.25, -0.0501294, 0.25)
+plunge_velocity = Vector3(0, 15, 0)
 
-[node name="LB" parent="Plungers" index="2" instance=ExtResource("3_vci30")]
-transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -0.25, 0.5, -0.25)
-plunge_velocity = Vector3(0, 5, 0)
+[node name="BackRight" parent="Plungers" index="2" groups=["back", "cannon", "right"] instance=ExtResource("3_vci30")]
+transform = Transform3D(0.258819, -0.965926, 0, 0.965926, 0.258819, 0, 0, 0, 1, -0.25, -0.0501294, -0.25)
+plunge_velocity = Vector3(0, 15, 0)
 
-[node name="RB" parent="Plungers" index="3" instance=ExtResource("3_vci30")]
-transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0.25, 0.5, -0.25)
-plunge_velocity = Vector3(0, 5, 0)
+[node name="BackLeft" parent="Plungers" index="3" groups=["back", "cannon", "left"] instance=ExtResource("3_vci30")]
+transform = Transform3D(0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0, 0, 1, 0.25, -0.0501294, -0.25)
+plunge_velocity = Vector3(0, 15, 0)
 
 [connection signal="triggered" from="PlayerControls" to="." method="_on_player_controls_triggered"]
+
+[editable path="ShipBig2"]

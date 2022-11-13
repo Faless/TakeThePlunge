@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://bg4h31vdewqt2"]
+
+[ext_resource type="PackedScene" uid="uid://cteibw8oq25jt" path="res://game/core/plunger.tscn" id="1_4wqfe"]
+[ext_resource type="Script" path="res://game/map/castle.gd" id="1_ny32v"]
+[ext_resource type="PackedScene" uid="uid://benqm6o0q1gfd" path="res://assets/Castle/Blends/CastleTower.blend" id="2_44fe4"]
+[ext_resource type="Texture2D" uid="uid://dhixb46x4rgwq" path="res://assets/Castle/Texture/Palette.png" id="3_vyftq"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_4jayt"]
+height = 10.0
+radius = 3.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rd48p"]
+albedo_texture = ExtResource("3_vyftq")
+
+[node name="Castle" type="StaticBody3D"]
+script = ExtResource("1_ny32v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+shape = SubResource("CylinderShape3D_4jayt")
+
+[node name="CastleTower" parent="." instance=ExtResource("2_44fe4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="CastleTower" parent="CastleTower" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_rd48p")
+
+[node name="Plungers" type="Node3D" parent="."]
+
+[node name="Plunger" parent="Plungers" instance=ExtResource("1_4wqfe")]
+transform = Transform3D(0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0, 1, 0.5, 1, 0)
+auto_plunge = 1.0
+
+[node name="Plunger2" parent="Plungers" instance=ExtResource("1_4wqfe")]
+transform = Transform3D(0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0, 1, -0.5, 1, 0)
+auto_plunge = 1.0
+
+[node name="Plunger3" parent="Plungers" instance=ExtResource("1_4wqfe")]
+transform = Transform3D(-2.18557e-08, 3.78552e-08, -1, 0.866025, 0.5, 0, 0.5, -0.866025, -4.37114e-08, 0.004, 1, -0.5)
+auto_plunge = 1.0
+
+[node name="Plunger4" parent="Plungers" instance=ExtResource("1_4wqfe")]
+transform = Transform3D(-2.18557e-08, -3.78552e-08, -1, -0.866025, 0.5, 0, 0.5, 0.866025, -4.37114e-08, 0.004, 1, 0.5)
+auto_plunge = 1.0
+
+[editable path="CastleTower"]
