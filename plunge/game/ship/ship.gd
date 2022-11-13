@@ -34,7 +34,7 @@ func apply_controls(delta: float, is_dummy: bool):
 	if not is_zero_approx(side):
 		rotate(Vector3.UP, deg_to_rad(ROT_SPEED) * side * delta)
 
-	var direction := (global_transform.basis.get_rotation_quaternion() * Vector3(0, 0, -fwd)).normalized()
+	var direction := (global_transform.basis.get_rotation_quaternion() * Vector3(0, 0, fwd)).normalized()
 	if direction:
 		velocity.x = direction.x * speed
 		velocity.z = direction.z * speed
