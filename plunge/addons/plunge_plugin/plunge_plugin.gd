@@ -12,11 +12,12 @@ class PlungerGizmo extends EditorNode3DGizmoPlugin:
 		return get_class()
 
 	func _redraw(gizmo: EditorNode3DGizmo):
-		var mesh := PrismMesh.new()
+		var mesh := SphereMesh.new()
 		var mat  := StandardMaterial3D.new()
 		gizmo.clear()
 		mat.albedo_color = Color.RED
-		mesh.size *= .1
+		mesh.radius *= .1
+		mesh.height *= .1
 		gizmo.add_mesh(mesh, mat)
 
 	func _create_gizmo(for_node_3d: Node3D):
