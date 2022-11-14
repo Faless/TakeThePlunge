@@ -1,9 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcwno8ryq2gpm"]
+[gd_scene load_steps=11 format=3 uid="uid://dcwno8ryq2gpm"]
 
 [ext_resource type="Script" path="res://game/map/map.gd" id="1_e1uvj"]
 [ext_resource type="PackedScene" uid="uid://cxn1pux6e1lcw" path="res://game/map/water.tscn" id="2_8gex1"]
 [ext_resource type="PackedScene" uid="uid://bg4h31vdewqt2" path="res://game/map/castle.tscn" id="2_bgsp4"]
 [ext_resource type="Script" path="res://game/map/player_spawner.gd" id="3_xldes"]
+[ext_resource type="PackedScene" uid="uid://cflj5llr1cmc1" path="res://game/map/rocks/rock_formation_1.tscn" id="5_tin0f"]
+[ext_resource type="PackedScene" uid="uid://h6v7ikkgi4yc" path="res://game/map/rocks/rock_formation_2.tscn" id="6_t2l6v"]
+[ext_resource type="PackedScene" uid="uid://dcvrs7dddaoft" path="res://game/map/rocks/rock_formation_3.tscn" id="7_w5y50"]
+[ext_resource type="PackedScene" uid="uid://cc5e71vsbsqij" path="res://game/map/rocks/rock_formation_4.tscn" id="8_6byyq"]
+[ext_resource type="PackedScene" uid="uid://barbpl22cvhs8" path="res://game/map/rocks/rock_formation_5.tscn" id="9_8lrwn"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4ruq1"]
 
@@ -42,5 +47,34 @@ script = ExtResource("3_xldes")
 [node name="ObjectSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://game/core/lump.tscn", "res://game/ship/cannonball.tscn")
 spawn_path = NodePath("../Objects")
+
+[node name="Rocks" type="Node3D" parent="."]
+
+[node name="RockFormation1" parent="Rocks" instance=ExtResource("5_tin0f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.69032, 0, 6.31692)
+
+[node name="RockFormation7" parent="Rocks" instance=ExtResource("5_tin0f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.31282, 0, 8.6003)
+
+[node name="RockFormation2" parent="Rocks" instance=ExtResource("6_t2l6v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27937, 0, 3.03245)
+
+[node name="RockFormation3" parent="Rocks" instance=ExtResource("7_w5y50")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.39312, 0, 13.8055)
+
+[node name="RockFormation8" parent="Rocks" instance=ExtResource("7_w5y50")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.36779, 0, 9.6679)
+
+[node name="RockFormation9" parent="Rocks" instance=ExtResource("7_w5y50")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.338042, 0, 0.216671)
+
+[node name="RockFormation4" parent="Rocks" instance=ExtResource("8_6byyq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.01695, 0, 14.7142)
+
+[node name="RockFormation6" parent="Rocks" instance=ExtResource("8_6byyq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.01695, 0, 3.29844)
+
+[node name="RockFormation5" parent="Rocks" instance=ExtResource("9_8lrwn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.34418, 0, 12.4278)
 
 [connection signal="plunged" from="Plungers/Castle" to="." method="spawn_lump"]

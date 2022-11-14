@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://o72wjaot5bhc"]
+
+[ext_resource type="PackedScene" uid="uid://b40objpownu51" path="res://assets/Rocks/Blends/Rock8.blend" id="1_u3k4i"]
+[ext_resource type="Material" uid="uid://0fmndxup2qde" path="res://game/map/rocks/rocks.material" id="2_mtxlx"]
+
+[node name="Rock8" instance=ExtResource("1_u3k4i")]
+
+[node name="Rock8" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_mtxlx")
