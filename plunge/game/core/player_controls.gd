@@ -55,7 +55,10 @@ func update_controls():
 		axises[i] = _axises[i].update()
 
 	for i in range(trigger_count):
-		trigger.rpc(i, 1 if Input.is_action_just_pressed(_triggers[i]) else 0)
+		if Input.is_action_just_pressed(_triggers[i]):
+			trigger.rpc(i, 1)
+		elif Input.is_action_just_released(_triggers[i]):
+			trigger.rpc(i, 0)
 
 @rpc(call_local)
 func trigger(idx: int, value: int):
