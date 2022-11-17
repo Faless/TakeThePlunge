@@ -77,4 +77,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.01695, 0, 3.29844)
 [node name="RockFormation5" parent="Rocks" instance=ExtResource("9_8lrwn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.34418, 0, 12.4278)
 
+[node name="Camera3D2" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0.138447, 57.5476, 51.1663)
+projection = 1
+current = true
+size = 40.0
+
 [connection signal="plunged" from="Plungers/Castle" to="." method="spawn_lump"]

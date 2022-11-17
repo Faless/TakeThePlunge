@@ -12,8 +12,8 @@ var player := 1 :
 
 func _ready():
 	controls.player = player
-	if player == multiplayer.get_unique_id():
-		camera.make_current()
+#	if player == multiplayer.get_unique_id():
+#		camera.make_current()
 
 
 func _physics_process(delta):

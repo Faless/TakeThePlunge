@@ -1,18 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxn1pux6e1lcw"]
+[gd_scene load_steps=9 format=3 uid="uid://cxn1pux6e1lcw"]
 
-[ext_resource type="Shader" uid="uid://cic7chab2tw1m" path="res://game/map/water_shader.tres" id="1_ciyiy"]
+[ext_resource type="Texture2D" uid="uid://ca1f40l8sq5tr" path="res://assets/Map/galaxy.jpg" id="1_t4xy0"]
+[ext_resource type="Material" uid="uid://da4iducat5n00" path="res://assets/Map/sea_material.tres" id="2_485dg"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_iyt2s"]
-render_priority = 0
-shader = ExtResource("1_ciyiy")
-shader_parameter/ColorParameter = Color(0, 0.266667, 0.533333, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_q46yq"]
+sky_top_color = Color(0.588235, 0.180392, 0.898039, 1)
+
+[sub_resource type="Sky" id="Sky_d18ow"]
+sky_material = SubResource("ProceduralSkyMaterial_q46yq")
+
+[sub_resource type="Environment" id="Environment_k8ahf"]
+background_mode = 2
+sky = SubResource("Sky_d18ow")
+ssr_enabled = true
+ssil_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_wnt2n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6xmas"]
+albedo_texture = ExtResource("1_t4xy0")
+metallic = 1.0
+roughness = 0.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_r1uuh"]
-material = SubResource("ShaderMaterial_iyt2s")
+material = ExtResource("2_485dg")
 subdivide_width = 20
 subdivide_depth = 20
 
 [node name="Water" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_k8ahf")
+camera_attributes = SubResource("CameraAttributesPractical_wnt2n")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_6xmas")
 mesh = SubResource("PlaneMesh_r1uuh")
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="."]
+update_mode = 1
