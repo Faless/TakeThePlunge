@@ -1,7 +1,7 @@
 extends CoreCharacter
 class_name Ship
 
-const FWD_SPEED := 5.0
+const FWD_SPEED := 1.0
 const BACK_SPEED := 3.0
 const ROT_SPEED := 30.0
 const FIRE_TIME := 1.0
