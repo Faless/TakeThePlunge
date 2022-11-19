@@ -33,13 +33,25 @@ _global_script_classes=[{
 "class": &"Plunger",
 "language": &"GDScript",
 "path": "res://game/core/plunger.gd"
+}, {
+"base": "CoreCharacter",
+"class": &"Ship",
+"language": &"GDScript",
+"path": "res://game/ship/ship.gd"
+}, {
+"base": "CharacterBody3D",
+"class": &"TailShip",
+"language": &"GDScript",
+"path": "res://game/ship/tail_ship.gd"
 }]
 _global_script_class_icons={
 "CoreCharacter": "",
 "CoreLump": "",
 "EchoServer": "",
 "PlayerControls": "",
-"Plunger": ""
+"Plunger": "",
+"Ship": "",
+"TailShip": ""
 }
 
 [application]

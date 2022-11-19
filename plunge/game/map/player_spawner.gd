@@ -1,12 +1,11 @@
 extends MultiplayerSpawner
 
-const Ship = preload("res://game/ship/ship.tscn")
+const ShipScene = preload("res://game/ship/ship.tscn")
 
-# Called when the node enters the scene tree for the first time.
 func _spawn_custom(data) -> Node:
 	if typeof(data) != TYPE_INT:
 		return
-	var node = Ship.instantiate()
+	var node = ShipScene.instantiate()
 	node.player = data
 	node.name = str(data)
 	return node

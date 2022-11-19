@@ -1,26 +1,25 @@
-[gd_scene load_steps=12 format=3 uid="uid://ddu377oxkwxgc"]
+[gd_scene load_steps=11 format=3 uid="uid://ddu377oxkwxgc"]
 
 [ext_resource type="PackedScene" uid="uid://dys7q37r6f5eb" path="res://game/core/character.tscn" id="1_uimug"]
 [ext_resource type="Script" path="res://game/ship/ship.gd" id="2_cwx0o"]
-[ext_resource type="PackedScene" uid="uid://cu1rqfkbn8jvp" path="res://assets/Ships/Blends/ShipBig2.blend" id="3_dcg5j"]
 [ext_resource type="PackedScene" uid="uid://cteibw8oq25jt" path="res://game/core/plunger.tscn" id="3_vci30"]
 [ext_resource type="ArrayMesh" uid="uid://bwodn87ap0pcn" path="res://assets/Ships/IsometricShipBig2.res" id="4_2jgwp"]
 [ext_resource type="Texture2D" uid="uid://bgqwsj2h7m0nm" path="res://assets/Ships/Texture/Palette.png" id="4_imfrj"]
 [ext_resource type="Shader" uid="uid://b3xni3isjh8tc" path="res://game/ship/SymbolSail.tres" id="5_vlxai"]
 [ext_resource type="ArrayMesh" uid="uid://k6ijj11b248c" path="res://assets/Ships/IsometricShipSmall.res" id="7_esjg5"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l23nd"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_le7e1"]
 radius = 0.8
 height = 7.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rashd"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sdqpy"]
 render_priority = 0
 shader = ExtResource("5_vlxai")
 shader_parameter/BackgroundSailsColor = Color(0.870588, 0.403922, 0, 1)
 shader_parameter/SailsColor = null
 shader_parameter/Texture2DParameter = ExtResource("4_imfrj")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rnlef"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf7nf"]
 resource_name = "BoatBodyMaterial"
 cull_mode = 2
 vertex_color_use_as_albedo = true
@@ -36,33 +35,42 @@ transform = Transform3D(-1, -3.69465e-08, 7.92319e-08, 0, 0.906308, 0.422618, -8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="3"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_l23nd")
+shape = SubResource("CapsuleShape3D_le7e1")
 
-[node name="ShipBig2" parent="." index="4" instance=ExtResource("3_dcg5j")]
+[node name="MeshTrain" type="Node3D" parent="." index="4"]
 
-[node name="ShipBig2" parent="ShipBig2" index="0"]
+[node name="ShipBig" type="MeshInstance3D" parent="MeshTrain" index="0"]
 mesh = ExtResource("4_2jgwp")
-surface_material_override/2 = SubResource("ShaderMaterial_rashd")
+skeleton = NodePath("")
+surface_material_override/2 = SubResource("ShaderMaterial_sdqpy")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ShipBig2" index="1"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshTrain" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.44468)
+visible = false
 mesh = ExtResource("7_esjg5")
-surface_material_override/0 = SubResource("StandardMaterial3D_rnlef")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_yf7nf")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShipBig2" index="2"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshTrain" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.44468)
+visible = false
 mesh = ExtResource("7_esjg5")
-surface_material_override/0 = SubResource("StandardMaterial3D_rnlef")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_yf7nf")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="ShipBig2" index="3"]
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshTrain" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12.4447)
+visible = false
 mesh = ExtResource("7_esjg5")
-surface_material_override/0 = SubResource("StandardMaterial3D_rnlef")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_yf7nf")
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="ShipBig2" index="4"]
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="MeshTrain" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16.4447)
+visible = false
 mesh = ExtResource("7_esjg5")
-surface_material_override/0 = SubResource("StandardMaterial3D_rnlef")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_yf7nf")
 
 [node name="Plungers" type="Node3D" parent="." index="5"]
 
@@ -120,5 +128,3 @@ light_color = Color(1, 0.501961, 0, 1)
 omni_range = 1.71656
 
 [connection signal="triggered" from="PlayerControls" to="." method="_on_player_controls_triggered"]
-
-[editable path="ShipBig2"]

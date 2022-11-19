@@ -1,6 +1,7 @@
 extends Node3D
 
 const CannonBall = preload("res://game/ship/cannonball.tscn")
+const TailShipScene = preload("res://game/ship/tail_ship.tscn")
 
 func _ready():
 	if multiplayer.is_server():
@@ -12,6 +13,10 @@ func _ready():
 func spawn_player(id: int):
 	var ship = $PlayerSpawner.spawn(id)
 	ship.plunged.connect(spawn_lump)
+	var tail = TailShipScene.instantiate()
+	tail.follow = ship
+	tail.position = Vector3(ship.position.x, ship.position.y, ship.position.z - 5)
+	$Objects.add_child(tail, true)
 
 
 func despawn_player(id: int):
