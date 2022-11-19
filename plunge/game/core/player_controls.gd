@@ -25,7 +25,7 @@ var player := 1 :
 		player = value
 		set_multiplayer_authority(player, true)
 
-@export var trigger_count := 3
+@export var trigger_count := 5
 @export var axis_count := 2
 
 var axises := PackedFloat32Array()
