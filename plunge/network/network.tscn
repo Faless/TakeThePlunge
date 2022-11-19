@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://camdbq7426a6c"]
+
+[ext_resource type="Script" path="res://network/network.gd" id="1_k5cpb"]
+[ext_resource type="Script" path="res://client/multiplayer_client.gd" id="2_jascx"]
+
+[node name="Network" type="Node"]
+script = ExtResource("1_k5cpb")
+
+[node name="WebRTC" type="Node" parent="."]
+script = ExtResource("2_jascx")
+
+[connection signal="connected" from="WebRTC" to="." method="_on_web_rtc_connected"]
+[connection signal="disconnected" from="WebRTC" to="." method="_on_web_rtc_disconnected"]

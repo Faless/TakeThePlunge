@@ -1,6 +1,82 @@
-[gd_scene load_steps=2 format=3 uid="uid://bderdvagsardn"]
+[gd_scene load_steps=4 format=3 uid="uid://bderdvagsardn"]
 
-[ext_resource type="Script" path="res://main_menu.gd" id="1_80si4"]
+[ext_resource type="PackedScene" uid="uid://cj22467h0oha3" path="res://network/enet_menu.tscn" id="2_d72a3"]
+[ext_resource type="PackedScene" uid="uid://dq0xbrkiamhd6" path="res://network/rtc_menu.tscn" id="2_q6vc5"]
+
+[sub_resource type="GDScript" id="GDScript_xnbjc"]
+script/source = "extends Control
+
+var peer : MultiplayerPeer
+var finding := false
+var log : Node :
+	get:
+		return $Box/WebRTCMenu
+
+func _ready():
+	Network.multiplayer_ready.connect(_notify_start)
+	Network.rtc.lobby_joined.connect(_joined)
+	Network.rtc.peer_connected.connect(_peer_connected, CONNECT_DEFERRED)
+
+
+func _exit_tree():
+	Network.multiplayer_ready.disconnect(_notify_start)
+	Network.rtc.lobby_joined.disconnect(_joined)
+	Network.rtc.peer_connected.disconnect(_peer_connected)
+
+
+func _joined(lobby):
+	log.write(\"Found match %s\" % lobby)
+	log.write(\"Awaiting players\")
+	if not finding:
+		$Box/WebRTCMenu.set_code(lobby)
+
+
+func _peer_connected(peer):
+	log.write(\"Peer connected %s\" % peer)
+	log.write(\"Match should start soon...\")
+	if not finding and peer != 1:
+		await get_tree().create_timer(3).timeout
+		printt(peer, multiplayer.get_unique_id())
+		Network.rtc.seal_lobby()
+
+
+func _notify_start():
+	if multiplayer.multiplayer_peer is WebRTCMultiplayerPeer and multiplayer.is_server():
+		remote_load.rpc()
+
+
+@rpc(call_local)
+func remote_load():
+	if multiplayer.multiplayer_peer is WebRTCMultiplayerPeer:
+		load_map()
+
+
+func load_map(p_file:=\"res://game/map/map.tscn\"):
+	get_tree().change_scene_to_file(p_file)
+
+
+func _on_echo_pressed():
+	Network.rtc.stop()
+	multiplayer.multiplayer_peer = EchoServer.new()
+	load_map()
+
+
+func _on_web_rtc_menu_start(lobby, url):
+	Network.rtc.stop()
+	finding = lobby == \"default\"
+	Network.start_webrtc(lobby, url) # Map will be loaded when multiplayer is ready
+
+
+func _on_enet_start(host):
+	Network.rtc.stop()
+	peer = ENetMultiplayerPeer.new()
+	if host == \"\":
+		peer.create_server(4343)
+	else:
+		peer.create_client(host, 4343)
+	multiplayer.multiplayer_peer = peer
+	load_map()
+"
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -9,26 +85,45 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_80si4")
+script = SubResource("GDScript_xnbjc")
 
-[node name="Echo" type="Button" parent="."]
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Box" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Echo" type="Button" parent="Box"]
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 31.0
 text = "Echo"
 
-[node name="Server" type="Button" parent="."]
-offset_left = 79.0
-offset_top = 1.0
-offset_right = 137.0
-offset_bottom = 32.0
-text = "Server"
+[node name="Enet" parent="Box" instance=ExtResource("2_d72a3")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 35.0
+offset_right = 1152.0
+offset_bottom = 66.0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="Client" type="Button" parent="."]
-offset_left = 163.0
-offset_right = 216.0
-offset_bottom = 31.0
-text = "Client"
+[node name="WebRTCMenu" parent="Box" instance=ExtResource("2_q6vc5")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 70.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_vertical = 3
 
-[connection signal="pressed" from="Echo" to="." method="_on_echo_pressed"]
-[connection signal="pressed" from="Server" to="." method="_on_server_pressed"]
-[connection signal="pressed" from="Client" to="." method="_on_client_pressed"]
+[connection signal="pressed" from="Box/Echo" to="." method="_on_echo_pressed"]
+[connection signal="start" from="Box/Enet" to="." method="_on_enet_start"]
+[connection signal="start" from="Box/WebRTCMenu" to="." method="_on_web_rtc_menu_start"]

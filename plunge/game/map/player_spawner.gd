@@ -7,5 +7,6 @@ func _spawn_custom(data) -> Node:
 		return
 	var node = ShipScene.instantiate()
 	node.player = data
+	node.position.x = (randi() % 10) - 20
 	node.name = str(data)
 	return node

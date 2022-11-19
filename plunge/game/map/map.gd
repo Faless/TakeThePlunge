@@ -4,8 +4,12 @@ const CannonBall = preload("res://game/ship/cannonball.tscn")
 const TailShipScene = preload("res://game/ship/tail_ship.tscn")
 
 func _ready():
+	randomize()
 	if multiplayer.is_server():
 		spawn_player(1)
+		for id in multiplayer.get_peers():
+			# Spawn already connected players
+			spawn_player(id)
 		multiplayer.peer_connected.connect(spawn_player)
 		multiplayer.peer_disconnected.connect(despawn_player)
 
