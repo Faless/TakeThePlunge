@@ -9,14 +9,18 @@ metallic = 0.75
 
 [sub_resource type="SphereMesh" id="SphereMesh_e8x0j"]
 material = SubResource("StandardMaterial3D_7pr5q")
-radius = 0.05
-height = 0.1
+radius = 0.3
+height = 0.6
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_pnpbj"]
-radius = 0.05
+radius = 0.3
 
 [node name="Cannonball" instance=ExtResource("1_3bygb")]
+linear_damp = 1.0
 script = ExtResource("2_il6yr")
+
+[node name="Lifetime" parent="." index="1"]
+wait_time = 0.4
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
 mesh = SubResource("SphereMesh_e8x0j")
