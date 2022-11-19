@@ -3,6 +3,7 @@ const crypto = require('crypto');
 
 const MAX_PEERS = 4096;
 const MAX_LOBBIES = 1024;
+const MAX_DEFAULT_LOBBY_PLAYERS = 2;
 const PORT = 9080;
 const ALFNUM = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -134,17 +135,12 @@ class Lobby {
 		return close;
 	}
 
-	seal(peer) {
-		// Only host can seal
-		if (peer.id !== this.host) {
-			throw new ProtoError(4000, STR_ONLY_HOST_CAN_SEAL);
-		}
+	seal() {
 		this.sealed = true;
 		this.peers.forEach((p) => {
 			p.ws.send(ProtoMessage(CMD.SEAL, 0));
 		});
-		console.log(`Peer ${peer.id} sealed lobby ${this.name} `
-			+ `with ${this.peers.length} peers`);
+		console.log(`Sealed lobby ${this.name} with ${this.peers.length} peers`);
 		this.closeTimer = setTimeout(() => {
 			// Close peer connection to host (and thus the lobby)
 			this.peers.forEach((p) => {
@@ -156,10 +152,24 @@ class Lobby {
 
 const lobbies = new Map();
 let peersCount = 0;
+let defaultLobby = null;
 
 function joinLobby(peer, pLobby, mesh) {
 	let lobbyName = pLobby;
-	if (lobbyName === '') {
+	if (lobbyName === 'default') {
+		if (!defaultLobby || defaultLobby.sealed || defaultLobby.peers.length >= MAX_DEFAULT_LOBBY_PLAYERS) {
+			defaultLobby = new Lobby(randomSecret(), peer.id, false);
+			console.log(`Created new default lobby for peer ${peer.id} (${defaultLobby.name})`);
+			lobbies.set(defaultLobby.name, defaultLobby);
+		}
+		lobbyName = defaultLobby.name;
+		if (defaultLobby.peers.length + 1 >= MAX_DEFAULT_LOBBY_PLAYERS) {
+			const lobby = defaultLobby;
+			setTimeout(() => {
+				lobby.seal();
+			}, 5000); // Match will autostart in 5 seconds.
+		}
+	} else if (lobbyName === '') {
 		if (lobbies.size >= MAX_LOBBIES) {
 			throw new ProtoError(4000, STR_TOO_MANY_LOBBIES);
 		}
@@ -218,7 +228,12 @@ function parseMsg(peer, msg) {
 
 	// Lobby sealing.
 	if (type === CMD.SEAL) {
-		lobby.seal(peer);
+		// Only host can seal
+		if (peer.id !== lobby.host) {
+			throw new ProtoError(4000, STR_ONLY_HOST_CAN_SEAL);
+		}
+		console.log(`Peer ${peer.id} sealed lobby ${lobby.name}`);
+		lobby.seal();
 		return;
 	}
 
@@ -274,6 +289,9 @@ wss.on('connection', (ws) => {
 		if (peer.lobby && lobbies.has(peer.lobby)
 			&& lobbies.get(peer.lobby).leave(peer)) {
 			lobbies.delete(peer.lobby);
+			if (defaultLobby && defaultLobby.name === peer.lobby) {
+				defaultLobby = null;
+			}
 			console.log(`Deleted lobby ${peer.lobby}`);
 			console.log(`Open lobbies: ${lobbies.size}`);
 			peer.lobby = '';
@@ -293,3 +311,5 @@ const interval = setInterval(() => { // eslint-disable-line no-unused-vars
 		ws.ping();
 	});
 }, PING_INTERVAL);
+
+console.log(`Server started on port ${PORT}`);
