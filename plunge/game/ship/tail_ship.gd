@@ -5,25 +5,14 @@ const SPEED = Ship.FWD_SPEED
 const ROT_SPEED = Ship.ROT_SPEED
 
 @export var follow : Ship = null
+var player_idx
+var _prev_pos: Vector3
+
+func _ready():
+	_prev_pos = global_transform.origin
 
 func _physics_process(delta):
-	if follow == null:
-		return
-
-	var fp := follow.position
-
-	# Look at other ship
-	var direction := position.direction_to(fp)
-
-	# Try to move closer
-	if position.distance_squared_to(fp) > 16:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-
-	move_and_slide()
-	#look_at(fp)
-	#rotation = rotation.rotated(Vector3(0,1,0), position.angle_to(fp))
-#	rotation = look_quat.get_euler() #basis.get_rotation_quaternion().slerp(look_quat, delta * ROT_SPEED).get_euler()
+	if global_transform.origin.distance_to(_prev_pos) > 0.001:
+		var dir = (global_transform.origin - _prev_pos).normalized()
+		look_at(global_transform.origin + dir)
+	_prev_pos = global_transform.origin

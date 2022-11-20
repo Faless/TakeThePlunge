@@ -5,6 +5,8 @@
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_q46yq"]
 sky_top_color = Color(0.588235, 0.180392, 0.898039, 1)
+ground_bottom_color = Color(0.141176, 0.0196078, 0.27451, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Sky" id="Sky_d18ow"]
 sky_material = SubResource("ProceduralSkyMaterial_q46yq")
@@ -13,7 +15,6 @@ sky_material = SubResource("ProceduralSkyMaterial_q46yq")
 background_mode = 2
 sky = SubResource("Sky_d18ow")
 ssr_enabled = true
-ssil_enabled = true
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_wnt2n"]
 

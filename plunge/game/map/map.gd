@@ -17,10 +17,13 @@ func _ready():
 func spawn_player(id: int):
 	var ship = $PlayerSpawner.spawn(id)
 	ship.plunged.connect(spawn_lump)
-	var tail = TailShipScene.instantiate()
-	tail.follow = ship
-	tail.position = Vector3(ship.position.x, ship.position.y, ship.position.z - 5)
-	$Objects.add_child(tail, true)
+	for i in range(4):
+		var tail_ship = TailShipScene.instantiate()
+		tail_ship.player_idx = id
+		$Objects.add_child(tail_ship, true)
+		ship.ships.append(tail_ship)
+#		print("adding boat")
+	ship.update_follow_ships()
 
 
 func despawn_player(id: int):

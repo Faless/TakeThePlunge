@@ -11,13 +11,14 @@ albedo_color = Color(0.293326, 0.111465, 0.0701237, 1)
 roughness = 0.5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ukhy5"]
-height = 3.0
+height = 2.31125
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 script = ExtResource("1_y3smt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.713798, 0, -6.24022e-08, 0, 0.713798, 0, 6.24022e-08, 0, -0.713798, 0, 0, -0.452315)
 mesh = ExtResource("1_2kldh")
 surface_material_override/0 = SubResource("StandardMaterial3D_me7qu")
 

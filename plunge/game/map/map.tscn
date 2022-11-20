@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dcwno8ryq2gpm"]
+[gd_scene load_steps=12 format=3 uid="uid://dcwno8ryq2gpm"]
 
 [ext_resource type="Script" path="res://game/map/map.gd" id="1_e1uvj"]
 [ext_resource type="PackedScene" uid="uid://cxn1pux6e1lcw" path="res://game/map/water.tscn" id="2_8gex1"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dcvrs7dddaoft" path="res://game/map/rocks/rock_formation_3.tscn" id="7_w5y50"]
 [ext_resource type="PackedScene" uid="uid://cc5e71vsbsqij" path="res://game/map/rocks/rock_formation_4.tscn" id="8_6byyq"]
 [ext_resource type="PackedScene" uid="uid://barbpl22cvhs8" path="res://game/map/rocks/rock_formation_5.tscn" id="9_8lrwn"]
+[ext_resource type="Script" path="res://game/core/FollowCamera.gd" id="10_u1ya0"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4ruq1"]
 
@@ -25,11 +26,24 @@ omni_attenuation = 2.84739e-05
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("WorldBoundaryShape3D_4ruq1")
 
-[node name="Water" parent="Ground" instance=ExtResource("2_8gex1")]
-transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -29, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_4ruq1")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-1, 3.69465e-08, -7.92319e-08, 0, 0.906308, 0.422618, 8.74228e-08, 0.422618, -0.906308, 0, 2.805, -3.5)
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(4.37114e-08, -1, -8.74228e-08, -1, -4.37114e-08, 0, -3.82137e-15, 8.74228e-08, -1, 29, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_4ruq1")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(-5.73206e-15, 1.31134e-07, -1, -1, -4.37114e-08, 0, -4.37114e-08, 1, 1.31134e-07, 0.527916, 3.8147e-06, -28.9257)
+shape = SubResource("WorldBoundaryShape3D_4ruq1")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(9.55343e-15, -2.18557e-07, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -2.18557e-07, 0.527916, 3.8147e-06, 28.8431)
+shape = SubResource("WorldBoundaryShape3D_4ruq1")
+
+[node name="Water" parent="Ground" instance=ExtResource("2_8gex1")]
+transform = Transform3D(28.7228, 0, 0, 0, 28.7228, 0, 0, 0, 28.7228, 0, 0, 0)
 
 [node name="Plungers" type="Node3D" parent="."]
 
@@ -82,5 +96,6 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 projection = 1
 current = true
 size = 25.0
+script = ExtResource("10_u1ya0")
 
 [connection signal="plunged" from="Plungers/Castle" to="." method="spawn_lump"]
